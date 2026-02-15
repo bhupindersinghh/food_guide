@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: foodlink-api
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:foodlink_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URL:http://localhost:9200}
+    username: ${ELASTICSEARCH_USERNAME:}
+    password: ${ELASTICSEARCH_PASSWORD:}
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Application Configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-secret-key-change-this-in-production-make-it-at-least-256-bits}
+    expiration-ms: 86400000  # 24 hours
+    
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+    
+  aws:
+    s3:
+      bucket: ${AWS_S3_BUCKET:foodlink-uploads}
+      region: ${AWS_REGION:ap-south-1}
+      access-key: ${AWS_ACCESS_KEY:}
+      secret-key: ${AWS_SECRET_KEY:}
+
+# Logging
+logging:
+  level:
+    com.foodlink: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.elasticsearch: INFO
+
+# Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

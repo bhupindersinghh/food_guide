@@ -1,0 +1,12 @@
+# Development-specific configuration
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    com.foodlink: DEBUG
+    org.springframework.web: DEBUG

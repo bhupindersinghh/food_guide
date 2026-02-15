@@ -1,0 +1,9 @@
+# Production-specific configuration
+spring:
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    com.foodlink: INFO
+    org.springframework.web: WARN
